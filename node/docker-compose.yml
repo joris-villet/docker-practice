@@ -1,0 +1,38 @@
+
+# image : image Docker à utiliser
+# container_name : nom du conteneur qui va apparaître dans la liste (plutôt que de générer un nom au hasard)
+# environment : variables d'environnement à passer au conteneur
+# ports : correspondance des ports ouverts
+# volumes : volumes à créer entre la machine hôte et le conteneur
+# build : si l'image doit être construite à partir d'un fichier Dockerfile
+# depends_on : si le conteneur dépend d'un autre pour son exécution (ex : une base de données)
+# links : liens entre services (l'un "verra" l'autre dans son réseau avec son nom propre), on peut utiliser service:alias (ici db:db) ou juste service (ici db) puisqu'il s'agit du même nom
+
+
+# version: "1"
+# services:
+#   node:
+#     image: "node:14"
+#     user: "node"
+#     working_dir: ./
+#     environment:
+#       - NODE_ENV=development
+#     expose:
+#       - "3000"
+#     command: "node index.js"
+
+version: "3"
+services:
+  nodejs:
+    container_name: "nodejs-app"
+    image: "node"
+    ports: 
+    - "${PORT}:${PORT}"
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./:/home/node/app
+    restart: "always"
+    command: "npm start"

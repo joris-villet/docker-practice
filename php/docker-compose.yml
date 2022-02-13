@@ -1,0 +1,24 @@
+# SIMPLE CONTAINER TO RUN PHP FILE
+
+version: "3"
+services:
+
+  # apache:
+  #   container_name: "apache"
+  #   image: "httpd"
+  #   ports: 
+  #   - "7070:80"
+  #   restart: "always"
+
+  app:
+    container_name: "php-apache"
+    image: "php:8.0-apache"
+    # depends_on:
+    # - apache
+    volumes:
+      - ./:/var/www/html
+    # working_dir: /var/www
+    ports:
+    - "${PORT}:80"
+    restart: "always"
+    # command: "php index.php"
