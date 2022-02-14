@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+
+  server:
+    container_name: nodejs-app
+    image: "node:16.14.0-bullseye-slim"
+    ports: 
+      - "${PORT}:${PORT}"
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./:/home/node/app
+    restart: "always"
+    command: "npm start"
+
+  sqitch:
+    container_name: sqitch
+    image: "sqitch/sqitch"
+    ports:
+     - "5431:5431"
+    working_dir: /home/node/app
+    volumes:
+     - ./:/home/node/app
+    # restart: "always"
